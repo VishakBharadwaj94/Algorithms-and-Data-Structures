@@ -12,8 +12,19 @@ class Buffer:
         self.finish_time = []
 
     def process(self, request):
-        # write your code here
-        return Response(False, -1)
+        import pdb;pdb.set_trace()
+        for idx,i in enumerate(self.finish_time):
+            if i<=request.arrived_at: 
+                del self.finish_time[idx]
+
+        if len(self.finish_time)==self.size:
+            return Response(True, -1)
+        
+        else:
+            response = Response(False,request.arrived_at)
+            self.finish_time.append(request.time_to_process+request.arrived_at)
+            return response 
+            
 
 
 def process_requests(requests, buffer):
